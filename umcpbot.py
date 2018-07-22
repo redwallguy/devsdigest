@@ -10,7 +10,7 @@ import requests
 bot = commands.Bot(command_prefix="!")
 token = os.environ.get("discToken")
 
-app = celery.Celery('umcp_celery', broker=os.environ.get("REDIS_URL"))
+app = celery.Celery(broker=os.environ.get("REDIS_URL"))
 
 @app.task
 def remind(message):
