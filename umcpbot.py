@@ -23,6 +23,7 @@ def remind(message):
 async def ping(ctx):
     remind.delay("fuck you")
 
-bot.run(token)
+if __name__ == '__main__':
+    bot.run(token)
 #TODO admin add/remove games from db (@bot.check(isAdmin))
 #TODO celery support for remindme feature
