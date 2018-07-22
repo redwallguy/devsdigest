@@ -14,9 +14,7 @@ app = celery.Celery('umcpbot', broker=os.environ.get("REDIS_URL"))
 
 @app.task
 def remind(message):
-    print(" UMCP BOT Success")
-    q = requests.post(os.environ.get("WEBHOOK_URL"),data={'content':message},headers={'Content-Type':'application/json'})
-    print(q.json())
+    q = requests.post(os.environ.get("WEBHOOK_URL"),json={'content':message},headers={'Content-Type':'application/json'})
 
 @bot.command()
 async def ping(ctx):
