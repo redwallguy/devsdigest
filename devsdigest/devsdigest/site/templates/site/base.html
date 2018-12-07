@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% load static %}
+    <head>
+        {% block head %}
+        <link rel="stylesheet" type="text/css" href= "{% static "site/css/dev.css" %}">
+        {% endblock %}
+    </head>
+
+    <body>
+    {% block body %}
+    <h1>Dev's Digest</h1>
+    <hr>
+    {% endblock %}
+    </body>
+
+    {% block footer %}
+
+    {% endblock %}
+</html>
