@@ -1,3 +1,42 @@
 body {
-    background-color: #c3e4fb;
+  background-color: #c3e4fb;
+}
+
+h1 {
+  text-align: center;
+}
+
+.console {
+  position: absolute;
+  background-color: #000000;
+  bottom: 0;
+  height: 100px;
+  width: 30%;
+  left: 70%;
+}
+
+.console * {
+  background-color: inherit;
+  color: #FFFFFF;
+}
+
+.action, .action * {
+  position: absolute;
+  bottom: 0;
+  font-family: "Menlo";
+  font-size: 11px;
+}
+
+.console-prompt {
+  left: 2px;
+  width: 150px;
+}
+
+.console-input {
+  left: 11.5vw;
+  border: none;
+}
+
+.console-input:focus {
+  outline:none;
 }
