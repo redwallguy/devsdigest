@@ -17,14 +17,17 @@
     {% endblock %}
     {% block console %}
     <div class="console">
-      <div class="action">
+      <div class="active">
     		<span class="console-prompt">Devs-Digest:~ dev$</span>
     		<input type="text" class="console-input" size="30", row="1">
     	</div>
     </div>
     {% endblock %}
     {% block basejs %}
-    <script type="text/javascript" src="{% static 'devsite/js/base.js' %}"></script>
+    <script src="{% static 'devsite/js/jquery-1.12.2.min.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+    <script src="{% static 'devsite/js/base.js' %}"></script>
+    <script src="{% static 'devsite/js/console.js' %}"></script>
     {% endblock %}
     {% block script %}
     {% endblock %}

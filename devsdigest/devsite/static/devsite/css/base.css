@@ -20,7 +20,7 @@ h1 {
   color: #FFFFFF;
 }
 
-.action, .action * {
+.active, .active * {
   position: absolute;
   bottom: 0;
   font-family: "Menlo";

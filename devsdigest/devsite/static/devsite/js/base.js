@@ -1,29 +1,23 @@
-var console_input = document.getElementsByClassName("console-input")[0];
+const devbase = (function($) {
+  let csrftoken = Cookies.get('csrftoken');
 
-console_input.addEventListener("keydown", function(event) {
-  if (event.key === "Enter") {
-    console_Command(console_input.text());
+  // these HTTP methods do not require CSRF protection
+  function csrfSafeMethod(method) {
+      return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
   }
-});
+  
 
-function console_Command(command) {
-  var primary_command = command.split(" ")[0];
+  // Ajax setup code taken/inspired by official django docs
+  $.ajaxSetup({
+      beforeSend: function(xhr, settings) {
+          if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+              xhr.setRequestHeader("X-CSRFToken", csrftoken);
+          }
+      }
+  });
 
-  switch (primary_command) {
-    case "cd": {
-
-    }
-    case "pwd": {
-
-    }
-    case "whoami": {
-
-    }
-    case "sudo": {
-
-    }
-    case "help": {
-      
-    }
+  return {
+    csrftoken: csrftoken,
   }
-}
+
+})($);
