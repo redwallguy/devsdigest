@@ -5,4 +5,4 @@ requirejs.config({
     }
 });
 
-requirejs(['scripts/base']);
+requirejs(['scripts/terminal']);

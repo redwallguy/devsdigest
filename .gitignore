@@ -3,3 +3,4 @@ venv
 *.pyc
 .env
 gunicorn_local.py
+staticfiles

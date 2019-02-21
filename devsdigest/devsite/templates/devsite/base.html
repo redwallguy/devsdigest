@@ -1,4 +1,4 @@
-{% load static from staticfiles %}
+{% load static %}
 <!DOCTYPE html>
 <html>
   <head>
@@ -24,10 +24,7 @@
     </div>
     {% endblock %}
     {% block basejs %}
-    <script src="{% static 'devsite/js/jquery-1.12.2.min.js' %}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
-    <script src="{% static 'devsite/js/base.js' %}"></script>
-    <script src="{% static 'devsite/js/console.js' %}"></script>
+    <script data-main='{% static 'devsite/js/main.js' %}' src='{% static 'devsite/js/require.js' %}'></script>
     {% endblock %}
     {% block script %}
     {% endblock %}

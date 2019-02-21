@@ -1,0 +1,1 @@
+web: python3 devsdigest/manage.py collectstatic --noinput;gunicorn -c config/gunicorn_local.py --pythonpath devsdigest devsdigest.wsgi
