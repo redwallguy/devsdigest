@@ -1,7 +1,8 @@
 {% extends '../base.html' %}
 {% load static %}
 {% block extra_css %}
-<link rel="stylesheet" type="text/css" href="{% static 'devsite/cs/2048.css' %}"/>
+<link href="https://fonts.googleapis.com/css?family=Asap" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="{% static 'devsite/css/2048.css' %}"/>
 {% endblock %}
 {% block rest_of_head %}
     <title>Projects: 2048 from scratch</title>
@@ -9,16 +10,19 @@
 <body>
 {% block body %}
     <h1>2048, Dev$ Style</h1>
-    <table class="2048-table"><tbody>
+    <table class="v2048-table"><tbody>
     </tbody></table>
-    <div class="2048-game-over"></div>
-    <table class="2048-legend"><tbody>
+    <div class="v2048-game-over"></div>
+    <table class="v2048-legend"><tbody>
+        <tr>
         {% for im in meme_images %}
-            <tr>
-                <td>{% im.num %}</td>
-                <td><img src="{% im.img %}"/></td>
-            </tr>
+                <td><div>{{ im.num }}</div></td>
         {% endfor %}
+        </tr><tr>
+            {% for im in meme_images %}
+                <td><img src="{% static im.img %}"/></td>
+            {% endfor %}
+        </tr>
     </tbody></table>
 {% endblock %}
 </body>

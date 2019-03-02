@@ -1,0 +1,30 @@
+.v2048-legend, .v2048-legend td {
+    border: 1px solid lightgray;
+    font-family: "Asap", sans-serif;
+    background-color: #FFEFC2;
+}
+
+.v2048-legend {
+    position: absolute;
+    top: 1000px;
+    left: 50%;
+    transform: translate(-50%); /* This and previous line center the table vertically*/
+}
+
+.v2048-legend td {
+    width:75px;
+    height:75px;
+}
+
+.v2048-legend td img{
+    width:75px;
+    height:75px;
+}
+
+.v2048-legend td div {
+    width: 75px;
+    height: 75px;
+    text-align: center;
+    vertical-align: middle;
+    display: inherit;
+}

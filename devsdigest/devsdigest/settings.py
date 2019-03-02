@@ -10,7 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
-import os
+import os, logging
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -25,7 +25,36 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['devsdigest.herokuapp.com', 'localhost']
+ALLOWED_HOSTS = ['devsdigest.herokuapp.com', 'localhost']  # Required for nginx proxies to work
+LOGLEVEL = os.environ.get("LOGLEVEL", "INFO")
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'console': {
+            # exact format is not important, this is the minimum information
+            'format': '%(asctime)s %(name)-12s %(levelname)-8s %(message)s',
+        },
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'console'
+        }
+    },
+    'loggers': {
+        '': {
+            'level': 'WARNING',
+            'handlers': ['console']
+        },
+        'devsdigest': {
+            'level': LOGLEVEL,
+            'handlers': ['console'],  # TODO add file/email handler
+            'propagate': False
+        }
+    }
+}
 
 
 # Application definition
