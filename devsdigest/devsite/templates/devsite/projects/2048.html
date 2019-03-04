@@ -1,12 +1,17 @@
 {% extends '../base.html' %}
+
 {% load static %}
+{% load require %}
+
 {% block extra_css %}
 <link href="https://fonts.googleapis.com/css?family=Asap" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="{% static 'devsite/css/2048.css' %}"/>
 {% endblock %}
+
 {% block rest_of_head %}
     <title>Projects: 2048 from scratch</title>
 {% endblock %}
+
 <body>
 {% block body %}
     <h1>2048, Dev$ Style</h1>
@@ -18,11 +23,16 @@
         {% for im in meme_images %}
                 <td><div>{{ im.num }}</div></td>
         {% endfor %}
-        </tr><tr>
+        </tr>
+        <tr>
             {% for im in meme_images %}
                 <td><img src="{% static im.img %}"/></td>
             {% endfor %}
         </tr>
     </tbody></table>
+{% endblock %}
+
+{% block script %}
+    {% require_module '../data_mains/2048main.js' %}
 {% endblock %}
 </body>

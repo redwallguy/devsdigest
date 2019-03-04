@@ -1,10 +1,15 @@
 {% load static %}
+{% load require %}
 <!DOCTYPE html>
 <html>
   <head>
-    <link type="text/css" rel="stylesheet" href="{% static 'devsite/css/base.css' %}"/>
+    {% block base_css %}
+      <link type="text/css" rel="stylesheet" href="{% static 'devsite/css/base.css' %}"/>
+    {% endblock %}
+
     {% block extra_css %}
     {% endblock %}
+
     {% block rest_of_head %}
       <title>Dev's Digest</title>
     {% endblock %}
@@ -14,17 +19,20 @@
       <h1>Dev's Digest</h1>
       <hr>
     {% endblock %}
+
     {% comment %}
-    {% block console %}
-    <div class="console">
-      <div class="active">
-    		<span class="console-prompt">Devs-Digest:~ dev$</span>
-    		<input type="text" class="console-input" size="30", row="1">
-    	</div>
-    </div>
-    {% endblock %}
+      {% block console %}
+      <div class="console">
+        <div class="active">
+              <span class="console-prompt">Devs-Digest:~ dev$</span>
+              <input type="text" class="console-input" size="30", row="1">
+          </div>
+      </div>
+      {% endblock %}
     {% endcomment %}
+
     {% block script %}
+      {% require_module '../data_mains/main' %}
     {% endblock %}
   </body>
 </html>

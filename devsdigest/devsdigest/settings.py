@@ -67,6 +67,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'devsite',
+    'require',
 ]
 
 MIDDLEWARE = [
@@ -149,3 +150,12 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.environ.get('STATIC_ROOT', os.path.join(BASE_DIR, 'staticfiles'))
+
+# django-require settings
+REQUIRE_BASE_URL = 'devsite/js/lib'
+REQUIRE_JS = '../require.js'
+REQUIRE_DEBUG = DEBUG
+REQUIRE_ENVIRONMENT = 'auto'
+REQUIRE_BUILD_PROFILE = 'devsdigest.build.js'
+
+STATICFILES_STORAGE = 'require.storage.OptimizedManifestStaticFilesStorage'
