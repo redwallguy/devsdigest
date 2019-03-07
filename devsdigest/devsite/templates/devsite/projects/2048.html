@@ -15,9 +15,11 @@
 <body>
 {% block body %}
     <h1>2048, Dev$ Style</h1>
-    <table class="v2048-table"><tbody>
-    </tbody></table>
-    <div class="v2048-game-over"></div>
+    <div class="game-container">
+        <table class="v2048-table"><tbody></tbody></table>
+
+        <div class="v2048-game-over"></div>
+    </div>
     <table class="v2048-legend"><tbody>
         <tr>
         {% for im in meme_images %}
@@ -26,10 +28,11 @@
         </tr>
         <tr>
             {% for im in meme_images %}
-                <td><img src="{% static im.img %}"/></td>
+                <td class="l{{forloop.counter}}"><img src="{% static im.img %}"/></td>
             {% endfor %}
         </tr>
     </tbody></table>
+    <div class="blank-hidden" data-blank-source="{% static blank %}"></div>
 {% endblock %}
 
 {% block script %}

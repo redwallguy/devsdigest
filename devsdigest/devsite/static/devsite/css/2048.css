@@ -6,14 +6,9 @@
 
 .v2048-legend {
     position: absolute;
-    top: 1000px;
+    top: 500px;
     left: 50%;
     transform: translate(-50%); /* This and previous line center the table vertically*/
-}
-
-.v2048-legend td {
-    width:75px;
-    height:75px;
 }
 
 .v2048-legend td img{
@@ -27,4 +22,28 @@
     text-align: center;
     vertical-align: middle;
     display: inherit;
+}
+
+.v2048-table {
+    background-color: #FFEFC2;
+}
+
+.game-container {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+}
+
+.v2048-table td {
+    border: 1px solid lightgray;
+    padding: 0px;
+}
+
+.v2048-table td img {
+    width: 75px;
+    height: 75px;
+}
+
+[src=""] {
+    visibility: hidden;
 }

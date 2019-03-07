@@ -22,6 +22,8 @@ def view_2048(request):
         context_dict = {"meme_images": []}
         with os.scandir(os.path.join(django_settings.STATIC_ROOT, 'devsite/img/2048/Memes')) as scan:
             for f in scan:
+                if f.name == "blank.gif":
+                    context_dict['blank'] = 'devsite/img/2048/Memes/' + f.name
                 for regex in re_list:
                     if regex[0].findall(f.name):
                         logger.debug("%s %s", f.name, regex[0])

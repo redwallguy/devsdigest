@@ -58,5 +58,7 @@
      * files.
      */
     skipDirOptimize: true
-    
-}) // TODO Add ES6-compatible minification after r.js build
+    /*
+     * TODO Add ES6-compatible minification after r.js build
+     */
+})
