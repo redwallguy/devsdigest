@@ -15,8 +15,8 @@
 <body>
 {% block body %}
     <h1>2048, Dev$ Style</h1>
-    <div class="game-container">
-        <table class="v2048-table"><tbody></tbody></table>
+    <div class="game-container" tabindex="0">
+        <div class="v2048-board"></div>
 
         <div class="v2048-game-over"></div>
     </div>
@@ -32,7 +32,6 @@
             {% endfor %}
         </tr>
     </tbody></table>
-    <div class="blank-hidden" data-blank-source="{% static blank %}"></div>
 {% endblock %}
 
 {% block script %}
