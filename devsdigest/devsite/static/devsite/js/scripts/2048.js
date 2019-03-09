@@ -1,26 +1,21 @@
 define(['jquery','./base'], function($, base) {
 
-   /* Creating table, inserting into DOM, and keeping references to elements in 2D array
+   /* Creating table and inserting into DOM
     * Each td has class identifiers corresponding to position (x,y) in table.
-    * (1,1) positioned at top left.
+    * (0,0) positioned at top left.
     */
-    let redo_arr = [];
-    let table_arr = [];
+    let redo_state = [];
     let table_element = $(".v2048-board");
 
     for (let i=0; i < 4 ; i++) {
         let div = $("<div class='v2048-board-tr"+ i + "'></div>");
-        let tmp_arr = [];
         for (let j=0; j < 4; j++) {
             let cell_pos = "y" + i + " x" + j;
             let cell_pos_selector = "td.y" + i + ".x" + j;
             let img = $("<div class='" + cell_pos + "' data-2048-num='0'><img/></div>");
-
-            tmp_arr.push($(cell_pos_selector));
             div.append(img);
         }
 
-        table_arr.push(tmp_arr);
         table_element.append(div);
     }
 
@@ -111,8 +106,32 @@ define(['jquery','./base'], function($, base) {
         }
     }
 
-    function reset() {
+   /* Reads board state and returns representative array
+    *
+    */
+    function read_table() {
+        let table = [];
 
+        for (let i=0; i < 4; i++) {
+        let temp = [];
+
+            for (let j=0; j < 4; j++) {
+                temp.push(get_cell(j,i).attr("data-2048-num"));
+            }
+            table.push(temp);
+        }
+        return table;
+    }
+
+   /* Loads board state from an array that is in format of read_table's return value
+    * i.e, write_table(read_table()) should not change the board state.
+    */
+    function write_table(saved_table) {
+        for (let i=0; i < 4; i++) {
+            for (let j=0; j < 4; j++) {
+                set_cell(j,i,saved_table[i][j]);
+            }
+        }
     }
 
    /* Helper functions
@@ -164,9 +183,9 @@ define(['jquery','./base'], function($, base) {
         return Math.floor(Math.random()*(b-a) + a);
     }
 
-    add_rand_cell();
-    add_rand_cell();
-
+   /* Sets up event handler for swiping using arrow keys.
+    *
+    */
     $(document).keydown(function(e){
         switch (e.which) {
             case 38: {
@@ -195,5 +214,15 @@ define(['jquery','./base'], function($, base) {
             }
         }
     });
+
+    set_cell(1,2,2);
+    set_cell(1,0,4);
+
+    setTimeout(function(){
+        console.log(read_table());
+        let table = [[0,0,0,0],[1,1,1,1],[2,2,2,2],[3,3,3,3]];
+        write_table(table);
+    }, 3000);
+
     //$("table.v2048-table img").attr("src", $(".l1 img").attr("src")); // temp image in cells to check dimensions
 }); // TODO make animation for slide: fade out/in (Previous slides in dir/fades out, current fades in stationary)
