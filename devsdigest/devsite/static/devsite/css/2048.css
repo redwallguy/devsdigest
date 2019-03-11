@@ -92,3 +92,31 @@
 [src=""] {
     visibility: hidden;
 }
+
+.v2048-scoreboard {
+    width: 100px;
+    height: 75px;
+    position: absolute;
+    right: 25%;
+}
+
+.v2048-game-over {
+  position: relative;
+  visibility: hidden;
+  width: 350px;
+  height: 350px;
+  background-color: #FFEFC2;
+  opacity: 0.7;
+  z-index: 5;
+  text-align: center;
+  display: table;
+}
+
+.v2048-game-over p {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.v2048-style-menu {
+
+}
