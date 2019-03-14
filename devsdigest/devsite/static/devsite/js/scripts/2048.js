@@ -271,4 +271,4 @@ define(['jquery','./base', './2048helpers'], function($, base, helper) {
 
     //$("table.v2048-table img").attr("src", $(".l1 img").attr("src")); // temp image in cells to check dimensions
 }); // TODO make animation for slide: fade out/in (Previous slides in dir/fades out, current fades in stationary)
-// TODO make reset key 'r' that must be held for x seconds (3?)
+// TODO make reset key 'r' that must be held for x seconds (1?)

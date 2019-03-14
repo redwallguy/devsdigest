@@ -10,7 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
-import os
+import os, dj_database_url
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -68,6 +68,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'devsite',
     'require',
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -105,10 +106,7 @@ WSGI_APPLICATION = 'devsdigest.wsgi.application'
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+    'default': dj_database_url.config() # https://stackoverflow.com/questions/29439183/configuring-postgres-on-heroku-with-django
 }
 
 
@@ -145,17 +143,24 @@ USE_L10N = True
 USE_TZ = True
 
 
+# AWS S3 settings
+AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME', 'com-devmoney-test')
+AWS_QUERYSTRING_AUTH = False # Required due to Django bug, otherwise collectstatic will rehash files in an infinite loop
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
-STATIC_URL = '/static/'
-STATIC_ROOT = os.environ.get('STATIC_ROOT', os.path.join(BASE_DIR, 'staticfiles'))
+STATICFILES_STORAGE = 'custom_storage.S3ManifestFilesStorage'
+STATICFILES_AWS_LOCATION = 'static'
 
-# django-require settings
+STATIC_URL = 'https://{}/{}/'.format(AWS_S3_CUSTOM_DOMAIN, STATICFILES_AWS_LOCATION)
+# STATIC_ROOT = os.environ.get('STATIC_ROOT', os.path.join(BASE_DIR, 'staticfiles'))
+
+# Django-require settings
 REQUIRE_BASE_URL = 'devsite/js/lib'
 REQUIRE_JS = '../require.js'
 REQUIRE_DEBUG = DEBUG
 REQUIRE_ENVIRONMENT = 'auto'
-REQUIRE_BUILD_PROFILE = 'devsdigest.build.js'
-
-STATICFILES_STORAGE = 'require.storage.OptimizedManifestStaticFilesStorage'

@@ -5,4 +5,4 @@ requirejs.config({
     }
 });
 
-requirejs(['scripts/terminal']); // loads and thus executes terminal.js
+requirejs(['scripts/base']); // loads and thus executes terminal.js

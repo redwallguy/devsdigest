@@ -1,6 +1,9 @@
 body {
-  background-color: #c3e4fb; /* Site color pallet
-                                #FFEFC2, #c3e4fb, #3a4a4d*/
+    /* Site color pallet: #FFEFC2, #c3e4fb, #3a4a4d
+    * Site fonts: Asap, Roboto
+    */
+  background-color: #c3e4fb;
+  font-family: "Asap", sans-serif;
 }
 
 h1 {

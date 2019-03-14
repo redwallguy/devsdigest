@@ -15,6 +15,7 @@
 <body>
 {% block body %}
     <h1>2048, Dev$ Style</h1>
+    <div class="v2048-style-menu"></div>
     <div class="game-container" tabindex="0">
         <div class="v2048-board"></div>
 
@@ -45,6 +46,6 @@
 {% endblock %}
 
 {% block script %}
-    {% require_module '../data_mains/2048main.js' %}
+  {% require_module '../data_mains/2048main.js' %}
 {% endblock %}
 </body>
