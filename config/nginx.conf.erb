@@ -42,12 +42,12 @@ http {
 			proxy_pass http://app_server;
 		}
 
-		location /static/ {
-		    alias staticfilesheroku/;
-		}
+	#	location /static/ {
+	#	    alias staticfilesheroku/;
+	#	}
 
-		location /favicon.ico {
-		    alias staticfilesheroku/devsite/img/favicon.ico;
-		}
+	#	location /favicon.ico {
+	#	    alias staticfilesheroku/devsite/img/favicon.ico;
+	#	}
 	}
 }

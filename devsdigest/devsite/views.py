@@ -1,8 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.conf import settings as django_settings
 from django.contrib.staticfiles.templatetags.staticfiles import static
-from django.shortcuts import redirect
+from django.contrib.staticfiles.storage import staticfiles_storage
+from django.http.response import HttpResponse
 import os, re, math
 import logging
 
@@ -17,22 +18,13 @@ def home(request):
     return render(request, "devsite/base.html")
 
 
-def view_2048(request, style_2048):
+def view_2048(request, style_2048=None): # TODO menu page on /2048
     re_list = []
-    for i in range(1, 12):
-        re_list.append([re.compile("meme" + str(int(math.pow(2, i))) + r'\.(png|gif|jpg|jpeg)'), i])
-        logger.debug("%s is the regex", re_list[i-1][0])
+    #style_2048 = "Memes" if style_2048 is None else style_2048 # ternary operator python
 
-    if style_2048 is None:
-        context_dict = {"meme_images": []}
-        with os.scandir(os.path.join(django_settings.STATIC_ROOT, 'devsite/img/2048/Memes')) as scan:
-            for f in scan:
-                if f.name == "blank.gif":
-                    context_dict['blank'] = 'devsite/img/2048/Memes/' + f.name
-                for regex in re_list:
-                    if regex[0].findall(f.name):
-                        logger.debug("%s %s", f.name, regex[0])
-                        url = 'devsite/img/2048/Memes/'+f.name
-                        context_dict['meme_images'].append({"img": url, "num": int(math.pow(2, regex[1]))})
-                        context_dict['meme_images'] = sorted(context_dict['meme_images'], key=lambda x: (x['num']))
-        return render(request, context=context_dict, template_name='devsite/projects/2048.html')
+    for i in range(1,12):
+        for f in ['png','jpg','jpeg','gif']:
+            logger.debug("Searching for: " + "meme" + str(math.floor(math.pow(2,i))) +  \
+            "." + f + "..." + str(staticfiles_storage.exists("devsite/img/2048/Memes/meme" + \
+            str(math.floor(math.pow(2,i))) + "." + f)))
+    return HttpResponse("Hello there!")
