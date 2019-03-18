@@ -246,7 +246,9 @@ define(['jquery','./base', './2048helpers'], function($, base, helper) {
             }
 
             check();
-            helper.add_rand_cell();
+            if(undo_state !== read_table()) {
+              helper.add_rand_cell();
+            }
         });
     }
 
