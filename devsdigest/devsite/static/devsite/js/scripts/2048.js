@@ -1,4 +1,4 @@
-define(['jquery','./base', './2048helpers'], function($, base, helper) {
+define(['jquery','./base', './2048helpers', 'underscore'], function($, base, helper, _) {
 /*BEGIN INIT*/
 
    /* Creating table and inserting into DOM
@@ -37,8 +37,6 @@ define(['jquery','./base', './2048helpers'], function($, base, helper) {
     *
     */
     function swipe(direction) {
-        undo_state = read_table();
-        redo_score = score;
         switch (direction) {
             case "left": {
                 swipe_helper("x", 1);
@@ -106,9 +104,7 @@ define(['jquery','./base', './2048helpers'], function($, base, helper) {
                     */
                     if (gather[j] === gather[j+1] && parseInt(gather[j]) !== 0) {
                         end_state.push("0", (parseInt(gather[j])+1).toString());
-                        console.log(parseInt(gather[j])+1);
                         score += Math.floor(Math.pow(2,parseInt(gather[j])+1));
-                        console.log(score);
                         helper.update_score(score,high_score);
                         if (score > high_score) {
                           high_score = score;
@@ -223,6 +219,9 @@ define(['jquery','./base', './2048helpers'], function($, base, helper) {
         $(document).on("keydown.v2048", function(e){
             e.preventDefault();
 
+            undo_state = read_table();
+            console.log(undo_state);
+            redo_score = score;
             switch (e.which) {
                 case 38: {
                     swipe("up");
@@ -245,8 +244,9 @@ define(['jquery','./base', './2048helpers'], function($, base, helper) {
                 }
             }
 
+            console.log(read_table());
             check();
-            if(undo_state !== read_table()) {
+            if(!_.isEqual(undo_state, read_table())) {
               helper.add_rand_cell();
             }
         });

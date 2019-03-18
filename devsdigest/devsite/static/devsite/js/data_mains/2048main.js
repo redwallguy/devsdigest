@@ -1,7 +1,13 @@
 requirejs.config({
+    shim: {
+      underscore: {
+        exports: '_'
+      }
+    },
     baseUrl: 'static/devsite/js/lib',
     paths: {
-        scripts: '../scripts' // (key, value) corresponds to (module name, module path)
+        scripts: '../scripts', // (key, value) corresponds to (module name, module path)
+        underscore: 'underscore_min'
     }
 });
 
