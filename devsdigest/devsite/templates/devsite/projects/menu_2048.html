@@ -1,0 +1,21 @@
+{% extends '../base.html' %}
+{% load static %}
+{% load require %}
+
+{% block extra_css %}
+  <link rel="stylesheet" type="text/css" href="{% static 'devsite/css/menu_2048.css' %}">
+{% endblock %}
+{% block body %}
+<h1>20 styles of 2048</h1>
+<h2>Pick a style and start playing!</h2>
+
+{% for style in styles %}
+  <a href="{{ style.url }}" data-list-num="{{ forloop.counter }}">
+    <img src="{{ style.banner }}" alt="{{ style.name }}"/>
+  </a>
+{% endfor %}
+{% endblock %}
+
+{% block script %}
+  {% require_module '../data_mains/2048_menu_main' %}
+{% endblock %}
