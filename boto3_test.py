@@ -1,8 +1,17 @@
-# List all subdirectories in bucket folder
-# https://github.com/boto/boto3/issues/134#issuecomment-116766812
-import boto3, re
-s3 = boto3.client('s3')
-paginator = s3.get_paginator('list_objects_v2')
-for res in paginator.paginate(Bucket='com-devmoney-test',Delimiter='/',Prefix='static/devsite/img/2048/'):
-    for prefix in res.get('CommonPrefixes'):
-        print(re.split('/',prefix.get('Prefix'))[4])
+import re
+
+regex = re.compile(r"""(\/\*static\*\/\s*["'](.*?)["']\s*\/\*endstatic\*\/)""")
+
+s = """import * as $ from /*static*/ 'devsite/js/lib/jquery.js' /*endstatic*/;
+jQuery = $;
+
+import * as base from /*static*/'devsite/js/scripts/base.js'/*endstatic*/;
+import * as helper from /*static*/'devsite/js/scripts/2048helpers.js'/*endstatic*/;
+import * as _ from /*static*/'devsite/js/lib/underscore_min.js'/*endstatic*/;"""
+
+for m in regex.findall(s):
+    print(m)
+
+(("*.css", (r"""(url\(['"]{0,1}\s*(.*?)["']{0,1}\))""",(r"""(@import\s*["']\s*(.*?)["'])""", """@import url("%s")"""),)),)
+
+(("*.js", ((r"""(\/\*static\*\/\s*["'](.*?)["']\s*\/\*endstatic\*\/)""", """ "%s" """),)),)

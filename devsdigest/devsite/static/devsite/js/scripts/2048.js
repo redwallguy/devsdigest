@@ -1,4 +1,9 @@
-define(['jquery','./base', './2048helpers', 'underscore'], function($, base, helper, _) {
+import * as $ from /*static*/ '../lib/jquery.js' /*endstatic*/;
+jQuery = $;
+
+import * as base from /*static*/'./base.js'/*endstatic*/;
+import * as helper from /*static*/'./2048helpers.js'/*endstatic*/;
+import * as _ from /*static*/'../lib/underscore_min.js'/*endstatic*/;
 /*BEGIN INIT*/
 
    /* Creating table and inserting into DOM
@@ -261,7 +266,7 @@ define(['jquery','./base', './2048helpers', 'underscore'], function($, base, hel
 
     let template_table = [[0,0,0,0],[1,1,1,1],[2,2,2,2],[3,3,3,3]];
 
-    return { // TODO streamline/remove this object and bind to elements here instead
+    export default { // TODO streamline/remove this object and bind to elements here instead
         swipe: swipe,
         read_table: read_table,
         write_table: write_table,
@@ -269,8 +274,8 @@ define(['jquery','./base', './2048helpers', 'underscore'], function($, base, hel
         template_table: template_table,
         undo: undo,
         new_game: new_game
-    }
+    };
 
     //$("table.v2048-table img").attr("src", $(".l1 img").attr("src")); // temp image in cells to check dimensions
-}); // TODO make animation for slide: fade out/in (Previous slides in dir/fades out, current fades in stationary)
-// TODO make reset key 'r' that must be held for x seconds (1?)
+    // TODO make animation for slide: fade out/in (Previous slides in dir/fades out, current fades in stationary)
+    // TODO make reset key 'r' that must be held for x seconds (1?)

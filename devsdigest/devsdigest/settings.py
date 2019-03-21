@@ -158,9 +158,3 @@ STATICFILES_AWS_LOCATION = 'static'
 
 STATIC_URL = 'https://{}/{}/'.format(AWS_S3_CUSTOM_DOMAIN, STATICFILES_AWS_LOCATION)
 # STATIC_ROOT = os.environ.get('STATIC_ROOT', os.path.join(BASE_DIR, 'staticfiles'))
-
-# Django-require settings
-REQUIRE_BASE_URL = 'devsite/js/lib'
-REQUIRE_JS = '../require.js'
-REQUIRE_DEBUG = DEBUG
-REQUIRE_ENVIRONMENT = 'auto'

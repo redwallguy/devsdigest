@@ -1,6 +1,5 @@
 {% extends '../base.html' %}
 {% load static %}
-{% load require %}
 
 {% block extra_css %}
   <link rel="stylesheet" type="text/css" href="{% static 'devsite/css/menu_2048.css' %}">
@@ -17,5 +16,5 @@
 {% endblock %}
 
 {% block script %}
-  {% require_module '../data_mains/2048_menu_main' %}
+  <script type="module" src="{% static 'devsite/js/scripts/2048menu.js' %}"></script>
 {% endblock %}

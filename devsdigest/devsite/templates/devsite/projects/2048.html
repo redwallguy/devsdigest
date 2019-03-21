@@ -1,7 +1,6 @@
 {% extends '../base.html' %}
 
 {% load static %}
-{% load require %}
 
 {% block extra_css %}
 <link href="https://fonts.googleapis.com/css?family=Asap" rel="stylesheet">
@@ -12,7 +11,6 @@
     <title>Projects: 2048 from scratch</title>
 {% endblock %}
 
-<body>
 {% block body %}
     <h1>2048, Dev$ Style</h1>
     <div class="v2048-style-menu"></div>
@@ -46,6 +44,5 @@
 {% endblock %}
 
 {% block script %}
-  {% require_module '../data_mains/2048main.js' %}
+  <script type="module" src="{% static 'devsite/js/scripts/2048.js' %}"></script>
 {% endblock %}
-</body>

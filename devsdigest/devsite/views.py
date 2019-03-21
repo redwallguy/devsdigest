@@ -8,9 +8,9 @@ import logging
 
 logger = logging.getLogger('devsdigest')
 
-def static_redirect(request, static_path):
-    logger.debug("Redirecting to " + static_path)
-    return redirect(django_settings.STATIC_URL + static_path)
+#def static_redirect(request, static_path):
+#    logger.debug("Redirecting to " + static_path)
+#    return redirect(django_settings.STATIC_URL + static_path)
 
 @ensure_csrf_cookie
 def home(request):
@@ -66,4 +66,22 @@ def menu_2048(request):
             context_dict['styles'].append(style_dict)
     #with open(staticfiles_storage.url('staticfiles.json')) as f:
     #    logger.debug(json.loads(f))
+    return render(request, "devsite/projects/menu_2048.html", context=context_dict)
+
+def dev_menu_2048(request):
+    context_dict = {"styles": []}
+
+    with os.scandir('/Users/devmoney/DesktopDir/Programming/Python/devsdigest/devsdigest/devsite/static/devsite/img/2048') as scanner:
+        for d in scanner:
+            if d.is_dir():
+                style_dict = {"name": "", "url": "", "banner": ""}
+                style_dict["url"] = "/2048/" + d.name
+                with open(os.path.join(d.path,"info.json")) as f:
+                    style_dict["name"] = json.load(f)["name"]
+
+                for file_type in ['jpg','jpeg','png','gif']:
+                    if staticfiles_storage.exists("devsite/img/2048/"+d.name+"/banner."+file_type):
+                        style_dict["banner"] = staticfiles_storage.url("devsite/img/2048/"+d.name+"/banner."+file_type)
+                context_dict["styles"].append(style_dict)
+
     return render(request, "devsite/projects/menu_2048.html", context=context_dict)

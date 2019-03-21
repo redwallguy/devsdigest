@@ -1,5 +1,4 @@
 {% load static %}
-{% load require %}
 <!DOCTYPE html>
 <html>
   <head>
@@ -31,9 +30,8 @@
       </div>
       {% endblock %}
     {% endcomment %}
-
     {% block script %}
-      {% require_module '../data_mains/main' %}
+      <script type="module" src="{% static 'devsite/js/scripts/base.js' %}"></script>
     {% endblock %}
   </body>
 </html>

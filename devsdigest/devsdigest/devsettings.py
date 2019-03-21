@@ -67,8 +67,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'devsite',
-    'require',
-    'storages',
 ]
 
 MIDDLEWARE = [
@@ -153,14 +151,8 @@ AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
-STATICFILES_STORAGE = 'require.storage.OptimizedManifestStaticFilesStorage' # Local storage in development
+STATICFILES_STORAGE = 'custom_storage.JSManifestFilesStorage' # Local storage in development
 STATICFILES_AWS_LOCATION = 'static'
 
 STATIC_URL = 'static' # Local url in development
 STATIC_ROOT = os.environ.get('STATIC_ROOT', os.path.join(BASE_DIR, 'staticfiles'))
-
-# Django-require settings
-REQUIRE_BASE_URL = 'devsite/js/lib'
-REQUIRE_JS = '../require.js'
-REQUIRE_DEBUG = DEBUG
-REQUIRE_ENVIRONMENT = 'auto'
