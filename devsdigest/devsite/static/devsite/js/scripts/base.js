@@ -1,12 +1,13 @@
-import * as $ from /*static*/ '../lib/jquery.js' /*endstatic*/;
-jQuery = $;
+import /*static*/ '../lib/jquery.js' /*endstatic*/;
+import * as msg from /*static*/ '../lib/message.js' /*endstatic*/;
+import /*static*/'../lib/cookie.js'/*endstatic*/;
 
-import * as cookie from /*static*/'../lib/cookie.js'/*endstatic*/;
+console.log(Object.keys(msg));
+msg.ht();
+console.log(Object.keys($));
+console.log(Object.keys(Cookies));
 
-console.log($);
-console.log(cookie.get('csrftoken'));
-
-let csrftoken = cookie.get('csrftoken');
+let csrftoken = Cookies.get('csrftoken');
 
 function csrfsafe(method) {
   return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
@@ -31,4 +32,4 @@ function ajax(options) {
   });
 }
 
-export default {ajax: ajax}; // object returned exposes ajax method
+export {ajax}; // object returned exposes ajax method

@@ -1,6 +1,4 @@
-import * as $ from /*static*/ '../lib/jquery.js' /*endstatic*/;
-jQuery = $;
-
+import /*static*/ '../lib/jquery.js' /*endstatic*/;
 import * as base from /*static*/'./base.js'/*endstatic*/;
  /* Helper functions
   *
@@ -61,13 +59,12 @@ import * as base from /*static*/'./base.js'/*endstatic*/;
       return Math.floor(Math.random()*(b-a) + a);
   }
 
-  export default {
-      rand_int: rand_int,
-      nth_image: nth_image,
-      add_rand_cell: add_rand_cell,
-      set_cell: set_cell,
-      set_cell_object: set_cell_object,
-      get_cell: get_cell,
-      update_score: update_score
-  }
-});
+  export {
+      rand_int,
+      nth_image,
+      add_rand_cell,
+      set_cell,
+      set_cell_object,
+      get_cell,
+      update_score
+  };

@@ -1,9 +1,7 @@
-import * as $ from /*static*/ '../lib/jquery.js' /*endstatic*/;
-jQuery = $;
-
+import /*static*/ '../lib/jquery.js' /*endstatic*/;
 import * as base from /*static*/'./base.js'/*endstatic*/;
 import * as helper from /*static*/'./2048helpers.js'/*endstatic*/;
-import * as _ from /*static*/'../lib/underscore_min.js'/*endstatic*/;
+import '../lib/underscore_min.js'/*endstatic*/;
 /*BEGIN INIT*/
 
    /* Creating table and inserting into DOM
@@ -266,14 +264,14 @@ import * as _ from /*static*/'../lib/underscore_min.js'/*endstatic*/;
 
     let template_table = [[0,0,0,0],[1,1,1,1],[2,2,2,2],[3,3,3,3]];
 
-    export default { // TODO streamline/remove this object and bind to elements here instead
-        swipe: swipe,
-        read_table: read_table,
-        write_table: write_table,
-        reset: reset,
-        template_table: template_table,
-        undo: undo,
-        new_game: new_game
+    export { // TODO streamline/remove this object and bind to elements here instead
+        swipe,
+        read_table,
+        write_table,
+        reset,
+        template_table,
+        undo,
+        new_game
     };
 
     //$("table.v2048-table img").attr("src", $(".l1 img").attr("src")); // temp image in cells to check dimensions

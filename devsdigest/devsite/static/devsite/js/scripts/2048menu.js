@@ -1,5 +1,4 @@
-import * as $ from /*static*/ '../lib/jquery.js' /*endstatic*/;
-jQuery = $;
+import /*static*/ '../lib/jquery.js' /*endstatic*/;
 
 import * as base from /*static*/'./base.js'/*endstatic*/;
 
