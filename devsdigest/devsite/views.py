@@ -18,8 +18,7 @@ def home(request):
 
 
 def view_2048(request, style_2048=None): # TODO menu page on /2048
-    context_dict = {"meme_images":[], "banner": ""}
-    #style_2048 = "Memes" if style_2048 is None else style_2048 # ternary operator python
+    context_dict = {"meme_images":[]}
 
     style_2048 = "Memes" if style_2048 is None else style_2048
     for i in range(1,12):

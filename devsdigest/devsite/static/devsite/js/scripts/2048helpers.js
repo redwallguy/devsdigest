@@ -27,7 +27,7 @@ import * as base from /*static*/'./base.js'/*endstatic*/;
       obj.find("img").attr("src", nth_image(n));
   }
 
- /* Add either l1 or l2 image into random empty cell
+ /* Add either l1 or l2 image into random empty cell; odds 90:10
   *
   */
   function add_rand_cell() {
@@ -35,7 +35,7 @@ import * as base from /*static*/'./base.js'/*endstatic*/;
       if (empty.length === 0) {
           return false;
       }
-      (rand_int(0,1) === 0) ? set_cell_object($(empty[rand_int(0,empty.length-1)]),1) :
+      (Math.random() < 0.9) ? set_cell_object($(empty[rand_int(0,empty.length-1)]),1) :
        set_cell_object($(empty[rand_int(0,empty.length-1)]),2);
   }
 
