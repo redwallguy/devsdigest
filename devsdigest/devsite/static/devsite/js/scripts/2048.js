@@ -13,29 +13,53 @@ import /*static*/'../lib/underscore_min.js'/*endstatic*/;
     let redo_score = 0;
     let high_score = 0;
     let table_element = $(".v2048-board");
+    let width_2048 = 6;
+    let height_2048 = 6;
 
-    for (let i=0; i < 4 ; i++) {
-        let div = $("<div class='v2048-board-tr"+ i + "'></div>");
-        for (let j=0; j < 4; j++) {
-            let cell_pos = "y" + i + " x" + j;
-            let cell_pos_selector = "td.y" + i + ".x" + j;
-            let img = $("<div class='" + cell_pos + "' data-2048-num='0'><img/></div>");
-            div.append(img);
-        }
+    function resize_board(width, height) {
 
-        table_element.append(div);
-    }
+      table_element.empty();
+      table_element.css({"width": parseInt(85*width)+"px", "height": parseInt(85*height)+"px"});
 
-    /* Bind methods to HTML elements
-     *
-     */
-     $(".v2048-reset").on("click.v2048", new_game);
-     $(".v2048-undo").on("click.v2048", undo);
+      $(".v2048-legend").css("top", ((85*width)+185)+"px");
 
-     /* Make new game */
-     new_game();
+      if (width < 1 || width > 10 || height < 1 || height > 10) {
+        console.log("Invalid dimensions.");
+        return false;
+      }
 
+      for (let i=0; i < height ; i++) {
+          for (let j=0; j < width; j++) {
+              let cell_pos = "y" + i + " x" + j;
+              let cell_pos_selector = "td.y" + i + ".x" + j;
+              let img = $("<div class='" + cell_pos + "' data-2048-num='0'><img/></div>");
+              table_element.append(img);
+          }
+      }
+
+      for (let i=0; i < height; i++) {
+        let spacing = 85;
+        let offset_str = parseInt((i*spacing)) + "px";
+        $(".y"+i).css("top", offset_str);
+      }
+
+      for (let i=0; i < width; i++) {
+        let spacing = 85;
+        let offset_str = parseInt(i*spacing) + "px";
+        $(".x"+i).css("left", offset_str);
+       }
+
+      /* Bind methods to HTML elements
+       *
+       */
+       //$(".v2048-reset").on("click.v2048", new_game);
+       //$(".v2048-undo").on("click.v2048", undo);
+
+       /* Make new game */
+       //new_game();
+   }
 /*END INIT*/
+
    /* Wrapper function for swiping. Called by keydown
     *
     */
@@ -60,6 +84,18 @@ import /*static*/'../lib/underscore_min.js'/*endstatic*/;
             default: {
                 console.log("Default swipe. Should never be reached.");
             }
+        }
+
+        function swipe_animated_helper(axis, ortho_start) {
+          let l1 = (axis == "x") ? height_2048 : width_2048;
+          let l2 = (axis == "x") ? width_2048 : height_2048;
+          for (let i=0; i < l1; l1++) {
+            let gather=[];
+
+            for (let j=0; j < l2; l2++) {
+              let cell = (axis == "x" && ortho_start == 1)
+            }
+          }
         }
 
         function swipe_helper(axis, ortho_start) {
@@ -154,10 +190,10 @@ import /*static*/'../lib/underscore_min.js'/*endstatic*/;
     function read_table() {
         let table = [];
 
-        for (let i=0; i < 4; i++) {
+        for (let i=0; i < height_2048; i++) {
         let temp = [];
 
-            for (let j=0; j < 4; j++) {
+            for (let j=0; j < width_2048; j++) {
                 temp.push(helper.get_cell(j,i).attr("data-2048-num"));
             }
             table.push(temp);
@@ -169,8 +205,8 @@ import /*static*/'../lib/underscore_min.js'/*endstatic*/;
     * i.e, write_table(read_table()) should not change the board state.
     */
     function write_table(saved_table) {
-        for (let i=0; i < 4; i++) {
-            for (let j=0; j < 4; j++) {
+        for (let i=0; i < height_2048; i++) {
+            for (let j=0; j < width_2048; j++) {
                 helper.set_cell(j,i,saved_table[i][j]);
             }
         }
@@ -242,7 +278,8 @@ import /*static*/'../lib/underscore_min.js'/*endstatic*/;
         $(document).off("keydown.v2048");
     }
 
-    let template_table = [[0,0,0,0],[1,1,1,1],[2,2,2,2],[3,3,3,3]];
+    let template_table = [[0,0,0,0,0,1],[0,0,0,0,0,1],[0,0,0,0,0,1],[0,0,0,0,0,1],[0,0,0,0,0,1],[0,0,0,0,0,1]];
+    resize_board(6,6);
 
     export { // TODO streamline/remove this object and bind to elements here instead
         swipe,
@@ -251,7 +288,8 @@ import /*static*/'../lib/underscore_min.js'/*endstatic*/;
         reset,
         template_table,
         undo,
-        new_game
+        new_game,
+        resize_board
     };
 
     //$("table.v2048-table img").attr("src", $(".l1 img").attr("src")); // temp image in cells to check dimensions

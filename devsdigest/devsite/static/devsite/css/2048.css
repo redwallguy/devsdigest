@@ -1,11 +1,10 @@
 .v2048-legend, .v2048-legend td {
     border: 1px solid lightgray;
-    background-color: #FFEFC2;
+    background-color: #ffefc2;
 }
 
 .v2048-legend {
     position: absolute;
-    top: 500px;
     left: 50%;
     transform: translate(-50%); /* This and previous line center the table vertically*/
 }
@@ -23,63 +22,27 @@
     display: inherit;
 }
 
+.v2048-board {
+  background-color: #3a4a4d;
+  position: relative;
+}
+
 .v2048-board * {
-    background-color: #FFEFC2;
+    background-color: #ffefc2;
 }
 
 .game-container {
-    position: absolute;
+    position: absolute;;
+    top: 150px;
     left: 50%;
-    transform: translate(-175px);
+    transform: translate(-50%);
 }
 
 .v2048-board > div {
-    width: 350px;
-    height: 85px;
-    position: absolute;
-    left: 0px;
-}
-
-.v2048-board-tr0 {
-    top: 0px;
-}
-
-.v2048-board-tr1 {
-    top: 85px;
-}
-
-.v2048-board-tr2 {
-    top: 170px;
-}
-
-.v2048-board-tr3 {
-    top: 255px;
-}
-
-.v2048-board div div:nth-child(1) {
-    left: 5px;
-}
-
-.v2048-board div div:nth-child(2) {
-    left: 94px;
-}
-
-.v2048-board div div:nth-child(3) {
-    left: 181px;
-}
-
-.v2048-board div div:nth-child(4) {
-    left: 268px;
-}
-
-
-.v2048-board div div {
-    border: 1px solid lightgray;
-    width: 75px;
-    height: 75px;
-    position: absolute;
-    top: 50%;
-    transform: translate(0,-50%);
+  position: absolute;
+  margin: 5px;
+  width: 75px;
+  height: 75px;
 }
 
 .v2048-board img {
@@ -93,10 +56,23 @@
 }
 
 .v2048-scoreboard {
-    width: 100px;
+    width: 400px;
     height: 75px;
     position: absolute;
-    right: 25%;
+    top: 75px;
+    left: 50%;
+    transform: translate(-50%);
+}
+
+.v2048-buttons {
+  position: absolute;
+  right: 15%;
+  bottom: 0;
+}
+
+.v2048-score {
+  position: absolute;
+  left: 0;
 }
 
 .v2048-game-over {
@@ -104,7 +80,7 @@
   visibility: hidden;
   width: 350px;
   height: 350px;
-  background-color: #FFEFC2;
+  background-color: #ffefc2;
   opacity: 0.7;
   z-index: 5;
   text-align: center;
@@ -114,8 +90,4 @@
 .v2048-game-over p {
   display: table-cell;
   vertical-align: middle;
-}
-
-.v2048-style-menu {
-
 }
