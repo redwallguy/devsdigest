@@ -11,6 +11,18 @@ function get_cell(x,y) {
     return $(".v2048-board div.x" + x + ".y" + y);
 }
 
+/* Get cell position from object
+*
+*/
+function get_cell_pos(cell) {
+  let re_x = /\s(x\d)\s/;
+  let re_y = /\s(y\d)\s/;
+  let pos = {};
+  pos.x = re_x.match(cell.attr("class"))[1];
+  pos.y = re_y.match(cell.attr("class"))[1];
+  return pos;
+}
+
 /* Set image for cell(x,y) as image from legend(n)
 *
 */
@@ -59,55 +71,29 @@ function rand_int(a,b) {
     return Math.floor(Math.random()*(b-a) + a);
 }
 
-function animate_promise(x0,y0,xf,yf) {
-  let n = get_cell(x0,y0).attr("data-2048-num");
-  console.log(n);
+function animate_cell(x0,y0,xf,yf,n) {
 
-  let prom = new Promise((resolve,reject) => {
-    setTimeout(function(){
-      console.log("Moving...")
-      set_cell(x0,y0,0);
-      set_cell(xf,yf,n);
-      resolve("Cell moved!");
-    },500);
+  return get_cell(x0,y0).find("img").fadeOut(50,function(){
+    set_cell(x0,y0,0);
+    get_cell(x0,y0).find("img").show();
+
+    get_cell(xf,yf).find("img").hide();
+    set_cell(xf,yf,n);
+  }).promise().then(function(){
+    get_cell(xf,yf).find("img").fadeIn(50);
   });
-
-  return prom;
 }
 
-function animate_cell(x0,y0,xf,yf) {
+function animate_cell_obj(cell,xf,yf,n) {
+  return cell.find("img").fadeOut(100,function(){
+    set_cell_object(cell,0);
+    cell.find("img").show();
 
-  if (!(x0 === xf || y0 === yf)) {
-    console.log("Error. Cannot animate unless cells are in the same row or column.");
-    return false;
-  }
-  let chain = Promise.resolve();
-  if (x0 === xf && y0 < yf) {
-    for (let i = y0; i < yf; i++) {
-      chain = chain.then(() => animate_promise(x0,i,xf,i+1));
-    }
-  }
-  else {
-    if (x0 === xf && yf < y0) {
-      for (let i = y0; i > yf; i--) {
-        chain = chain.then(() => animate_promise(x0,i,xf,i-1));
-      }
-    }
-    else {
-      if (y0 === yf && x0 < xf) {
-        for (let i = x0; i < xf; i++) {
-          chain = chain.then(() => animate_promise(i,y0,i+1,yf));
-        }
-      }
-      else {
-        if (y0 === yf && x0 > xf) {
-          for (let i = x0; i > xf; i--) {
-            chain = chain.then(() => animate_promise(i,y0,i-1,yf));
-          }
-        }
-      }
-    }
-  }
+    get_cell(xf,yf).find("img").hide();
+    set_cell(xf,yf,n);
+  }).promise().then(function(){
+    get_cell(xf,yf).find("img").fadeIn(100);
+  });
 }
 
 export {
@@ -119,5 +105,5 @@ export {
     get_cell,
     update_score,
     animate_cell,
-    animate_promise
+    animate_cell_obj
 };
