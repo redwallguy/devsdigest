@@ -15,11 +15,11 @@ function get_cell(x,y) {
 *
 */
 function get_cell_pos(cell) {
-  let re_x = /\s(x\d)\s/;
-  let re_y = /\s(y\d)\s/;
+  let re_x = /\s*x(\d)\s*/;
+  let re_y = /\s*y(\d)\s*/;
   let pos = {};
-  pos.x = re_x.match(cell.attr("class"))[1];
-  pos.y = re_y.match(cell.attr("class"))[1];
+  pos.x = cell.attr("class").match(re_x)[1];
+  pos.y = cell.attr("class").match(re_y)[1];
   return pos;
 }
 
@@ -85,14 +85,18 @@ function animate_cell(x0,y0,xf,yf,n) {
 }
 
 function animate_cell_obj(cell,xf,yf,n) {
-  return cell.find("img").fadeOut(100,function(){
+  if (parseInt(get_cell_pos(cell).x) === xf && parseInt(get_cell_pos(cell).y) === yf) {
+    return Promise.resolve();
+  }
+
+  return cell.find("img").fadeOut(5,function(){
     set_cell_object(cell,0);
     cell.find("img").show();
 
     get_cell(xf,yf).find("img").hide();
     set_cell(xf,yf,n);
   }).promise().then(function(){
-    get_cell(xf,yf).find("img").fadeIn(100);
+    get_cell(xf,yf).find("img").fadeIn(5);
   });
 }
 
@@ -103,6 +107,7 @@ export {
     set_cell,
     set_cell_object,
     get_cell,
+    get_cell_pos,
     update_score,
     animate_cell,
     animate_cell_obj

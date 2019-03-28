@@ -93,8 +93,9 @@ function swipe(direction) {
 function swipe_animated_helper(axis, ortho_start) {
   let l1 = (axis == "x") ? height_2048 : width_2048;
   let l2 = (axis == "x") ? width_2048 : height_2048;
-  console.log("l1: " + l1 + " l2: " + l2);
   let promise_queue = [];
+  let promise_queue_2 = [];
+  let promise_queue_3 = [];
   for (let i=0; i < l1; i++) {
     let compress_counter = 0;
 
@@ -116,61 +117,61 @@ function swipe_animated_helper(axis, ortho_start) {
        }
     }
   }
-  return promise_queue
-}
-
-function swipe_helper(axis, ortho_start) {
-   /* Iterate over table by chosen axis. Process each row/column into final state
-    *
-    */
-    for (let i=0; i < 4; i++) {
-        let gather = [];
-
-        for (let j=0; j < 4; j++) {
-            let cell = (axis === "x" && ortho_start===1) ? helper.get_cell(j,i) :
-             (axis === "x" && ortho_start===0) ? helper.get_cell(3-j,i) :
-             (axis === "y" && ortho_start===1) ? helper.get_cell(i,j) :
-             (axis === "y" && ortho_start===0) ? helper.get_cell(i,3-j) :
-             "ERROR IN GATHER";
-            if (cell.attr("data-2048-num") !== "0") {
-                gather.push(cell.attr("data-2048-num"));
-            }
+  let prom = Promise.all(promise_queue).then(() => {
+    for (let i=0; i < l1; i++) {
+      for (let j=0; j < l2; j++) {
+        if (j > l2-1) {
+          break;
         }
-        let end_state = [];
+        let cell = (axis === "x" && ortho_start===1) ? helper.get_cell(j,i) :
+         (axis === "x" && ortho_start===0) ? helper.get_cell(width_2048-j-1,i) :
+         (axis === "y" && ortho_start===1) ? helper.get_cell(i,j) :
+         (axis === "y" && ortho_start===0) ? helper.get_cell(i,height_2048-j-1) :
+         console.log("ERROR IN COMBINE");
 
-        for (let j=0; j < gather.length; j++) {
-          if (j === gather.length) {
-            break; // If we overshoot, nothing more to do.
-          }
-          if (j === gather.length-1) {
-            end_state.push(gather[j]);
-            break; // If at the end, nothing to pair to, so end.
-          }
-          if (gather[j]===gather[j+1]) {
-            // If consecutive entries match, combine them, update score, and skip next cell
-            end_state.push(parseInt(gather[j])+1);
-            score += Math.floor(Math.pow(2,parseInt(gather[j])+1));
-            helper.update_score(score,high_score);
-            j++;
-          }
-          else {
-            end_state.push(gather[j]);
-          }
-        }
-        while (end_state.length < 4) {
-          end_state.push("0");
-        }
+         let cell_neighbor = (axis === "x" && ortho_start===1) ? helper.get_cell(j+1,i) :
+          (axis === "x" && ortho_start===0) ? helper.get_cell(width_2048-j,i) :
+          (axis === "y" && ortho_start===1) ? helper.get_cell(i,j+1) :
+          (axis === "y" && ortho_start===0) ? helper.get_cell(i,height_2048-j) :
+          console.log("ERROR IN COMBINE");
 
-        for (let j=0; j < 4; j++) {
-            (axis === "x" && ortho_start==1) ? helper.set_cell(j,i,end_state[j]) : // left
-            (axis === "x" && ortho_start==0) ? helper.set_cell(3-j,i,end_state[j]) : // right
-            (axis === "y" && ortho_start==1) ? helper.set_cell(i,j,end_state[j]) : // up
-            (axis === "y" && ortho_start==0) ? helper.set_cell(i,3-j,end_state[j]) : // down
-            console.log("End of axis/ortho chain: should never be reached.");
-        }
+          if (cell.attr("data-2048-num") === cell_neighbor.attr("data-2048-num")
+           && cell.attr("data-2048-num") !== "0") {
+             let n = parseInt(cell.attr("data-2048-num"))+1;
+             let cell_pos = helper.get_cell_pos(cell);
+             let cell_neighbor_pos = helper.get_cell_pos(cell_neighbor);
+             let p = helper.animate_cell_obj(cell_neighbor,cell_pos.x,cell_pos.y,n);
+             promise_queue_2.push(p);
+             j++;
+           }
+      }
     }
+    return Promise.all(promise_queue_2);
+  }).then( () => {
+        for (let i=0; i < l1; i++) {
+          let compress_counter = 0;
 
-
+          for (let j=0; j < l2; j++) {
+            let cell = (axis === "x" && ortho_start===1) ? helper.get_cell(j,i) :
+             (axis === "x" && ortho_start===0) ? helper.get_cell(width_2048-j-1,i) :
+             (axis === "y" && ortho_start===1) ? helper.get_cell(i,j) :
+             (axis === "y" && ortho_start===0) ? helper.get_cell(i,height_2048-j-1) :
+             console.log("ERROR IN GATHER");
+             let n = cell.attr("data-2048-num");
+             if (n !== "0") {
+                let p = (axis === "x" && ortho_start===1) ? helper.animate_cell_obj(cell,compress_counter,i,n) :
+                (axis === "x" && ortho_start===0) ? helper.animate_cell_obj(cell,width_2048-compress_counter-1,i,n) :
+                (axis === "y" && ortho_start===1) ? helper.animate_cell_obj(cell,i,compress_counter,n) :
+                (axis === "y" && ortho_start===0) ? helper.animate_cell_obj(cell,i,height_2048-compress_counter-1,n) :
+                console.log("ERROR IN COMPRESS");
+                compress_counter++;
+                promise_queue_3.push(p);
+             }
+          }
+        }
+        return Promise.all(promise_queue_3);
+      });
+  return prom;
 }
 
 function check() {
@@ -296,7 +297,7 @@ function bind() {
         redo_score = score;
 
         let pq = swipe(dir);
-        Promise.all(pq).then(() => {
+        pq.then(() => {
           board_in_use = false;
           check();
           if (!_.isEqual(undo_state, read_table())) {
@@ -331,7 +332,6 @@ export { // TODO streamline/remove this object and bind to elements here instead
     undo,
     new_game,
     resize_board,
-    swipe_helper,
     swipe_animated_helper
 };
 
