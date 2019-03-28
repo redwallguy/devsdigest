@@ -13,26 +13,36 @@ let score = 0;
 let redo_score = 0;
 let high_score = 0;
 let table_element = $(".v2048-board");
-let width_2048 = 6;
-let height_2048 = 6;
+let width_2048 = 4;
+let height_2048 = 4;
 let board_in_use = false;
 
-function resize_board(width, height) {
-  width_2048 = width;
-  height_2048 = height;
+$(".v2048-reset").on("click.v2048", new_game);
+$(".v2048-undo").on("click.v2048", undo);
+$(".v2048-resize").on("click.v2048", resize_board);
 
-  table_element.empty();
-  table_element.css({"width": parseInt(85*width)+"px", "height": parseInt(85*height)+"px"});
+function resize_board() {
+  let width = parseInt($(".v2048-resize-width").val());
+  console.log(width);
+  width_2048 = (width > 4 && width < 11) ? width : width_2048;
+  console.log(width_2048);
+  let height = parseInt($(".v2048-resize-height").val());
+  console.log(height);
+  height_2048 = (height > 4 && height < 11) ? height : height_2048;
+  console.log(height_2048);
 
-  $(".v2048-legend").css("top", ((85*width)+185)+"px");
-
-  if (width < 1 || width > 10 || height < 1 || height > 10) {
+  if (width < 4 || width > 10 || height < 4 || height > 10) {
     console.log("Invalid dimensions.");
     return false;
   }
 
-  for (let i=0; i < height ; i++) {
-      for (let j=0; j < width; j++) {
+  table_element.empty();
+  table_element.css({"width": parseInt(85*width_2048)+"px", "height": parseInt(85*height_2048)+"px"});
+
+  $(".v2048-legend").css("top", ((85*width_2048)+185)+"px");
+
+  for (let i=0; i < height_2048 ; i++) {
+      for (let j=0; j < width_2048; j++) {
           let cell_pos = "y" + i + " x" + j;
           let cell_pos_selector = "td.y" + i + ".x" + j;
           let img = $("<div class='" + cell_pos + "' data-2048-num='0'><img/></div>");
@@ -40,13 +50,13 @@ function resize_board(width, height) {
       }
   }
 
-  for (let i=0; i < height; i++) {
+  for (let i=0; i < height_2048; i++) {
     let spacing = 85;
     let offset_str = parseInt((i*spacing)) + "px";
     $(".y"+i).css("top", offset_str);
   }
 
-  for (let i=0; i < width; i++) {
+  for (let i=0; i < width_2048; i++) {
     let spacing = 85;
     let offset_str = parseInt(i*spacing) + "px";
     $(".x"+i).css("left", offset_str);
@@ -55,8 +65,6 @@ function resize_board(width, height) {
   /* Bind methods to HTML elements
    *
    */
-   $(".v2048-reset").on("click.v2048", new_game);
-   $(".v2048-undo").on("click.v2048", undo);
 
    /* Make new game */
    new_game();
@@ -138,6 +146,8 @@ function swipe_animated_helper(axis, ortho_start) {
           if (cell.attr("data-2048-num") === cell_neighbor.attr("data-2048-num")
            && cell.attr("data-2048-num") !== "0") {
              let n = parseInt(cell.attr("data-2048-num"))+1;
+             score += Math.floor(Math.pow(2,n));
+             helper.update_score(score,high_score);
              let cell_pos = helper.get_cell_pos(cell);
              let cell_neighbor_pos = helper.get_cell_pos(cell_neighbor);
              let p = helper.animate_cell_obj(cell_neighbor,cell_pos.x,cell_pos.y,n);
@@ -267,7 +277,6 @@ function new_game() {
 */
 function bind() {
     $(document).on("keydown.v2048", function(e){
-      e.preventDefault();
       let dir= "";
 
       switch (e.which) {
@@ -288,9 +297,10 @@ function bind() {
           break;
         }
         default: {
-          return false;
+          return;
         }
       }
+      e.preventDefault();
       if (!board_in_use) {
         board_in_use = true;
         undo_state = read_table();
@@ -319,7 +329,7 @@ let template_table = [[0,0,0,0,0,1],[0,0,0,0,0,1],[0,0,0,0,0,1],[0,0,0,0,0,1],[0
 let template_table_2 = [[1,1,1,1,1,1],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0]];
 let template_table_3 = [[1,1,0,1,0,1],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0]];
 let template_table_4 = [[1,1,0,1,0,1],[0,1,0,1,0,0],[0,0,0,1,0,0],[1,0,0,0,1,0],[0,0,1,1,0,0],[1,1,0,0,0,0]];
-resize_board(6,6);
+resize_board();
 
 export { // TODO streamline/remove this object and bind to elements here instead
     swipe,
