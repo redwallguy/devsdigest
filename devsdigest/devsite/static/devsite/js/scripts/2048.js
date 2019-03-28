@@ -308,11 +308,11 @@ function bind() {
 
         let pq = swipe(dir);
         pq.then(() => {
-          board_in_use = false;
           check();
           if (!_.isEqual(undo_state, read_table())) {
             helper.add_rand_cell();
           }
+        board_in_use = false;
         });
       }
   });

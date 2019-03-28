@@ -89,14 +89,14 @@ function animate_cell_obj(cell,xf,yf,n) {
     return Promise.resolve();
   }
 
-  return cell.find("img").fadeOut(5,function(){
+  return cell.find("img").fadeOut(20,function(){
     set_cell_object(cell,0);
     cell.find("img").show();
 
     get_cell(xf,yf).find("img").hide();
     set_cell(xf,yf,n);
   }).promise().then(function(){
-    get_cell(xf,yf).find("img").fadeIn(5);
+    get_cell(xf,yf).find("img").fadeIn(20);
   });
 }
 
