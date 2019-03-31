@@ -23,15 +23,11 @@ $(".v2048-resize").on("click.v2048", resize_board);
 
 function resize_board() {
   let width = parseInt($(".v2048-resize-width").val());
-  console.log(width);
-  width_2048 = (width > 4 && width < 11) ? width : width_2048;
-  console.log(width_2048);
+  width_2048 = (width > 4 && width < 9) ? width : width_2048;
   let height = parseInt($(".v2048-resize-height").val());
-  console.log(height);
-  height_2048 = (height > 4 && height < 11) ? height : height_2048;
-  console.log(height_2048);
+  height_2048 = (height > 4 && height < 9) ? height : height_2048;
 
-  if (width < 4 || width > 10 || height < 4 || height > 10) {
+  if (width < 4 || width > 8 || height < 4 || height > 8) {
     console.log("Invalid dimensions.");
     return false;
   }
@@ -98,14 +94,21 @@ function swipe(direction) {
     }
 }
 
+/* Swipe helper with animations.
+*/
 function swipe_animated_helper(axis, ortho_start) {
   let l1 = (axis == "x") ? height_2048 : width_2048;
   let l2 = (axis == "x") ? width_2048 : height_2048;
   let promise_queue = [];
   let promise_queue_2 = [];
   let promise_queue_3 = [];
+
+  /* First phase: Move nonzero tiles to the end. Animations are put into a promise queue
+  * and waited upon.
+  */
   for (let i=0; i < l1; i++) {
     let compress_counter = 0;
+    let chain = Promise.resolve();
 
     for (let j=0; j < l2; j++) {
       let cell = (axis === "x" && ortho_start===1) ? helper.get_cell(j,i) :
@@ -115,18 +118,25 @@ function swipe_animated_helper(axis, ortho_start) {
        console.log("ERROR IN GATHER");
        let n = cell.attr("data-2048-num");
        if (n !== "0") {
+         chain = chain.then(() => {
           let p = (axis === "x" && ortho_start===1) ? helper.animate_cell_obj(cell,compress_counter,i,n) :
           (axis === "x" && ortho_start===0) ? helper.animate_cell_obj(cell,width_2048-compress_counter-1,i,n) :
           (axis === "y" && ortho_start===1) ? helper.animate_cell_obj(cell,i,compress_counter,n) :
           (axis === "y" && ortho_start===0) ? helper.animate_cell_obj(cell,i,height_2048-compress_counter-1,n) :
           console.log("ERROR IN COMPRESS");
           compress_counter++;
-          promise_queue.push(p);
+          return p;
+        });
        }
     }
+    promise_queue.push(chain); // chain paradigm taken from https://stackoverflow.com/questions/44955463/creating-a-promise-chain-in-a-for-loop
   }
+  /* After first animations are done, animate combining cells
+  *
+  */
   let prom = Promise.all(promise_queue).then(() => {
     for (let i=0; i < l1; i++) {
+      let chain = Promise.resolve();
       for (let j=0; j < l2; j++) {
         if (j > l2-1) {
           break;
@@ -145,21 +155,27 @@ function swipe_animated_helper(axis, ortho_start) {
 
           if (cell.attr("data-2048-num") === cell_neighbor.attr("data-2048-num")
            && cell.attr("data-2048-num") !== "0") {
+             chain = chain.then( () => {
              let n = parseInt(cell.attr("data-2048-num"))+1;
              score += Math.floor(Math.pow(2,n));
              helper.update_score(score,high_score);
              let cell_pos = helper.get_cell_pos(cell);
              let cell_neighbor_pos = helper.get_cell_pos(cell_neighbor);
-             let p = helper.animate_cell_obj(cell_neighbor,cell_pos.x,cell_pos.y,n);
-             promise_queue_2.push(p);
              j++;
-           }
+             return helper.animate_cell_obj(cell_neighbor,cell_pos.x,cell_pos.y,n);
+           });
+          }
       }
+      promise_queue_2.push(chain);
     }
     return Promise.all(promise_queue_2);
+    /* After combining cells, regather them at the end of the row/column
+    *
+    */
   }).then( () => {
         for (let i=0; i < l1; i++) {
           let compress_counter = 0;
+          let chain = Promise.resolve();
 
           for (let j=0; j < l2; j++) {
             let cell = (axis === "x" && ortho_start===1) ? helper.get_cell(j,i) :
@@ -169,18 +185,25 @@ function swipe_animated_helper(axis, ortho_start) {
              console.log("ERROR IN GATHER");
              let n = cell.attr("data-2048-num");
              if (n !== "0") {
+               chain = chain.then( () => {
+
                 let p = (axis === "x" && ortho_start===1) ? helper.animate_cell_obj(cell,compress_counter,i,n) :
                 (axis === "x" && ortho_start===0) ? helper.animate_cell_obj(cell,width_2048-compress_counter-1,i,n) :
                 (axis === "y" && ortho_start===1) ? helper.animate_cell_obj(cell,i,compress_counter,n) :
                 (axis === "y" && ortho_start===0) ? helper.animate_cell_obj(cell,i,height_2048-compress_counter-1,n) :
                 console.log("ERROR IN COMPRESS");
                 compress_counter++;
-                promise_queue_3.push(p);
+                return p;
+              });
              }
           }
+          promise_queue_3.push(chain);
         }
         return Promise.all(promise_queue_3);
       });
+      /* return promise queue to be waited upon
+      *
+      */
   return prom;
 }
 
@@ -306,13 +329,12 @@ function bind() {
         undo_state = read_table();
         redo_score = score;
 
-        let pq = swipe(dir);
-        pq.then(() => {
+        swipe(dir).then(() => {
           check();
           if (!_.isEqual(undo_state, read_table())) {
             helper.add_rand_cell();
           }
-        board_in_use = false;
+          board_in_use = false;
         });
       }
   });
@@ -325,10 +347,6 @@ function unbind() {
     $(document).off("keydown.v2048");
 }
 
-let template_table = [[0,0,0,0,0,1],[0,0,0,0,0,1],[0,0,0,0,0,1],[0,0,0,0,0,1],[0,0,0,0,0,1],[0,0,0,0,0,1]];
-let template_table_2 = [[1,1,1,1,1,1],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0]];
-let template_table_3 = [[1,1,0,1,0,1],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0]];
-let template_table_4 = [[1,1,0,1,0,1],[0,1,0,1,0,0],[0,0,0,1,0,0],[1,0,0,0,1,0],[0,0,1,1,0,0],[1,1,0,0,0,0]];
 resize_board();
 
 export { // TODO streamline/remove this object and bind to elements here instead
@@ -336,9 +354,6 @@ export { // TODO streamline/remove this object and bind to elements here instead
     read_table,
     write_table,
     reset,
-    template_table,
-    template_table_2,
-    template_table_3,
     undo,
     new_game,
     resize_board,
