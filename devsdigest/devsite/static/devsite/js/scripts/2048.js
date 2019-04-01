@@ -148,20 +148,20 @@ function swipe_animated_helper(axis, ortho_start) {
          console.log("ERROR IN COMBINE");
 
          let cell_neighbor = (axis === "x" && ortho_start===1) ? helper.get_cell(j+1,i) :
-          (axis === "x" && ortho_start===0) ? helper.get_cell(width_2048-j,i) :
+          (axis === "x" && ortho_start===0) ? helper.get_cell(width_2048-j-2,i) :
           (axis === "y" && ortho_start===1) ? helper.get_cell(i,j+1) :
-          (axis === "y" && ortho_start===0) ? helper.get_cell(i,height_2048-j) :
+          (axis === "y" && ortho_start===0) ? helper.get_cell(i,height_2048-j-2) :
           console.log("ERROR IN COMBINE");
 
           if (cell.attr("data-2048-num") === cell_neighbor.attr("data-2048-num")
            && cell.attr("data-2048-num") !== "0") {
+             j++;
              chain = chain.then( () => {
              let n = parseInt(cell.attr("data-2048-num"))+1;
              score += Math.floor(Math.pow(2,n));
              helper.update_score(score,high_score);
              let cell_pos = helper.get_cell_pos(cell);
              let cell_neighbor_pos = helper.get_cell_pos(cell_neighbor);
-             j++;
              return helper.animate_cell_obj(cell_neighbor,cell_pos.x,cell_pos.y,n);
            });
           }
