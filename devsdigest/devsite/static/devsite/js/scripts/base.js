@@ -2,11 +2,6 @@ import /*static*/ '../lib/jquery.js' /*endstatic*/;
 import * as msg from /*static*/ '../lib/message.js' /*endstatic*/;
 import /*static*/'../lib/cookie.js'/*endstatic*/;
 
-console.log(Object.keys(msg));
-msg.ht();
-console.log(Object.keys($));
-console.log(Object.keys(Cookies));
-
 let csrftoken = Cookies.get('csrftoken');
 
 function csrfsafe(method) {

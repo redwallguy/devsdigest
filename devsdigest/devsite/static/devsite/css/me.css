@@ -1,0 +1,21 @@
+img {
+  object-fit: cover;
+  position: relative;
+  width: 200px;
+  height: 200px;
+  left: 50%;
+  transform: translate(-50%);
+}
+
+body > img {
+  width: 450px;
+  height: 450px;
+}
+
+body > div {
+  margin: auto;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  width: 75%;
+  position: inherit;
+}

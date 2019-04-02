@@ -8,5 +8,7 @@ urlpatterns = [
     path('', views.home, name="home"),
     path('2048', views.menu_2048, name='view_2048'),
     path('2048/<style_2048>', views.view_2048, name="view_2048_style"),
-    path('dev2048', views.dev_menu_2048, name='dev_view_2048')
+    path('dev2048', views.dev_menu_2048, name='dev_view_2048'),
+    path('projects', views.projects, name='projects'),
+    path('me', views.me, name='me'),
 ]

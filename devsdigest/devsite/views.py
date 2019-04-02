@@ -8,16 +8,18 @@ import logging
 
 logger = logging.getLogger('devsdigest')
 
-#def static_redirect(request, static_path):
-#    logger.debug("Redirecting to " + static_path)
-#    return redirect(django_settings.STATIC_URL + static_path)
-
 @ensure_csrf_cookie
 def home(request):
     return render(request, "devsite/base.html")
 
+def projects(request):
+    return render(request, "devsite/projects/projects.html")
 
-def view_2048(request, style_2048=None): # TODO menu page on /2048
+def me(request):
+    return render(request, "devsite/me.html")
+
+
+def view_2048(request, style_2048=None):
     context_dict = {"meme_images":[]}
 
     style_2048 = "Memes" if style_2048 is None else style_2048

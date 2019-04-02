@@ -1,0 +1,145 @@
+{% extends '../base.html' %}
+{% load static %}
+
+{% block extra_css %}
+  <link href="{% static 'devsite/css/projects.css'%}" rel="stylesheet" type="text/css">
+{% endblock %}
+{% block rest_of_head %}
+  <title>My Projects</title>
+{% endblock %}
+
+{% block body %}
+  <div id="project-milton">
+    <h2>Milton: the Discord soundboard</h2>
+    <p>Milton is my pride and joy; my greatest creation. It represents the cumulative
+      expertise of my programming skills, growing in capability and utility as
+      I did the same.</p>
+    <p>Milton is a soundboard bot for the popular VoIP service, Discord. It allows
+    users in its Discord servers to play sound clips on command, set clips to play
+    as they join a voice channel, and display the available clips as desired. Admin
+    users can use its website couterpart to upload new clips and organize them,
+    grouping them into "boards" of clips. They can even give clips with unwieldy,
+    long names an alias, so as to call them with ease.</p>
+    <p>Milton is quite extensive, and showcases a wide knowledge of languages,
+    practices, and frameworks, including:</p>
+    <ul>
+      <li>Languages:
+        <ul>
+          <li>Python</li>
+          <li>Javascript</li>
+        </ul>
+      </li>
+      <li>Frameworks/Libraries:
+        <ul>
+          <li>Django</li>
+          <li>jQuery</li>
+        </ul>
+      </li>
+      <li>Practices:
+        <ul>
+          <li>Utilizing public APIs</li>
+          <li>Asynchronous programming</li>
+          <li>Rate limiting</li>
+          <li>Task scheduling</li>
+        </ul>
+      </li>
+      <li>Services:
+        <ul>
+          <li>AWS S3 cloud storage</li>
+          <li>Heroku deployment</li>
+        </ul>
+      </li>
+    </ul>
+    <p>Milton's source code can be found
+    <a href="https://github.com/redwallguy/soundboard/">here.</a></p>
+  </div>
+
+  <div id="project-2048">
+    <h2>2048 from scratch</h2>
+    <p>One of the first concepts I reverse engineered was the game 2048.
+    It was my first serious foray into Javascript, and while crude at the time,
+    has been refactored into a modular and structured work. The implementation
+    on this site showcases advanced usage of both Django and Javascript. Some
+    skills used are:</p>
+    <ul>
+      <li>Languages:
+        <ul>
+          <li>Javascript</li>
+        </ul>
+      </li>
+      <li>Frameworks:
+        <ul>
+          <li>jQuery</li>
+          <li>Django
+            <ul>
+              <li>Hashed file storage for cache busting</li>
+              <li>Custom javascript post-processing</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>Practices:
+        <ul>
+          <li>modular Javascript in the ES6 standard</li>
+          <li>Asynchronous javascript</li>
+          <li>Execution logic for complex systems</li>
+        </ul>
+      </li>
+    </ul>
+    <p>The source code for my 2048 implementation, as well as the rest of the site,
+    can be found <a href="https://github.com/redwallguy/devsdigest/">here.</a></p>
+  </div>
+
+  <div id="project-digest">
+    <h2>The Digest</h2>
+    <p>My first ever personal programming project, this endeavor led me down
+    the path of programming. Me and my friends were half-complaining about
+    having to go to each individual community on Reddit every day to find the
+    best content in each one every day. I thought that there must be a bot to do
+    it already made, but I couldn't find one. So I decided to simply do it myself.</p>
+    <p>I started tinkering with Python and figuring out how to do more and more
+    until I finally had an amalgamation of tools that could cobble together a working
+    bot. The feeling when I saw it actually working was incredible, so I continued
+    programming and never stopped.</p>
+    <p>As far as first projects go, this has been surprisingly durable, and works
+    to this day. It uses:</p>
+    <ul>
+      <li>Languages:
+        <ul><li>Python</li></ul>
+      </li>
+      <li>Libraries:
+        <ul>
+          <li>PRAW (Reddit API wrapper)</li>
+          <li>imgurpython (Imgur API wrapper)</li>
+          <li>Discord.py (Discord API wrapper)</li>
+        </ul>
+      </li>
+    </ul>
+    <p>The source code for the digest can be found
+      <a href="https://github.com/redwallguy/digestheroku">here.</a></p>
+  </div>
+
+  <div id="project-umcp">
+    <h2>UMCP Gaming Bot</h2>
+    <p>To further exercise my skills, I worked as a bot developer for the UMCP
+    Gaming Club. I essentially totally refactored their bot to use best practices
+    and current libraries. This bot ended up using:</p>
+    <ul>
+      <li>Languages:
+        <ul><li>Python</li><li>SQL</li></ul>
+      </li>
+      <li>Libraries
+        <ul><li>Discord.py</li></ul>
+      </li>
+      <li>Practices:
+        <ul>
+          <li>Version control security</li>
+          <li>Database storage and constraint checks</li>
+        </ul>
+      </li>
+    </ul>
+    <p>The source code for the refactored UMCP Gaming Club bot can be found
+      <a href="https://github.com/redwallguy/umcpbotshared">here.</a></p>
+  </div>
+
+{% endblock %}

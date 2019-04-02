@@ -1,0 +1,25 @@
+{% extends './base.html' %}
+{% load static %}
+
+{% block extra_css %}
+  <link href="{% static 'devsite/css/me.css' %}" rel="stylesheet" type="text/css">
+{% endblock %}
+
+{% block rest_of_head %}
+  <title>About me</title>
+{% endblock %}
+
+{% block body %}
+  <h2>About me</h2>
+  <hr>
+  <div>
+  <img src="{% static 'devsite/img/profile.jpg' %}">
+  <p>My name is Dev Vibhu Someshwar. I'm an aspiring software developer looking
+  to land his first job. While I am most knowledgable in Python and Javscript, I
+  also am handy with HTML, CSS, and SQL. Furthermore, I am willing and eager to
+  learn new languages and frameworks, and expand my programming knowledge.</p>
+  <p>When I am not coding, I can generally be found reading fantasy novels,
+  surfing Wikipedia, playing games with my friends, or doing a few rounds of
+  vigorous ping-pong.</p>
+</div>
+{% endblock %}

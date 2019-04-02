@@ -71,6 +71,9 @@ function rand_int(a,b) {
     return Math.floor(Math.random()*(b-a) + a);
 }
 
+/* Animate cell from (x0,y0) to (xf,yf)
+*
+*/
 function animate_cell(x0,y0,xf,yf,n) {
 
   return get_cell(x0,y0).find("img").fadeOut(50,function(){
@@ -84,6 +87,9 @@ function animate_cell(x0,y0,xf,yf,n) {
   });
 }
 
+/* Animate cell object to (xf,yf)
+*
+*/
 function animate_cell_obj(cell,xf,yf,n) {
   if (parseInt(get_cell_pos(cell).x) === xf && parseInt(get_cell_pos(cell).y) === yf) {
     return Promise.resolve();

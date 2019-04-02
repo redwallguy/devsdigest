@@ -1,0 +1,10 @@
+body > div {
+  margin: auto;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  width: 75%;
+  position: inherit;
+  background-color: #3a4a4d;
+  color: #dddddd;
+  padding: 5px;
+}
