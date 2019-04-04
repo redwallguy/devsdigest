@@ -8,3 +8,8 @@ body > div {
   color: #dddddd;
   padding: 5px;
 }
+
+.gallery > img {
+  width: 400px;
+  height: 200px;
+}

@@ -17,6 +17,11 @@
     {% endblock %}
   </head>
   <body>
+    {% block home_button %}
+      <div id="home-button"><a href="/">
+        <img src="{% static 'devsite/img/devsdigest.ico' %}"></a></div>
+    {% endblock %}
+
     {% block body %}
       <h1>Dev's Digest</h1>
       <hr>

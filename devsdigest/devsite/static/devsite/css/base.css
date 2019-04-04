@@ -10,6 +10,19 @@ h1, h2 {
   text-align: center;
 }
 
+#home-button {
+  padding: 0;
+}
+
+#home-button img {
+  position: fixed;
+  width: 10vw;
+  height: 10vw;
+  bottom: 0;
+  left: 0;
+  transform: none;
+}
+
 .console {
   position: absolute;
   background-color: #000000;

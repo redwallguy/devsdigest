@@ -10,7 +10,7 @@ logger = logging.getLogger('devsdigest')
 
 @ensure_csrf_cookie
 def home(request):
-    return render(request, "devsite/base.html")
+    return render(request, "devsite/home.html")
 
 def projects(request):
     return render(request, "devsite/projects/projects.html")

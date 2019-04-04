@@ -1,5 +1,6 @@
 {% extends '../base.html' %}
 {% load static %}
+{% load custom_tags %}
 
 {% block extra_css %}
   <link href="{% static 'devsite/css/projects.css'%}" rel="stylesheet" type="text/css">
@@ -52,6 +53,13 @@
     </ul>
     <p>Milton's source code can be found
     <a href="https://github.com/redwallguy/soundboard/">here.</a></p>
+    <div class="gallery">
+      {% for i in 5|times %}
+      {% with p="devsite/img/milton/milton_proj_"|addstr:i|add:".png" %}
+      <img src="{% static p %}">
+      {% endwith %}
+      {% endfor %}
+    </div>
   </div>
 
   <div id="project-2048">
@@ -86,6 +94,7 @@
         </ul>
       </li>
     </ul>
+    <p>To try my version of 2048 for yourself, click <a href="/2048">here.</a></p>
     <p>The source code for my 2048 implementation, as well as the rest of the site,
     can be found <a href="https://github.com/redwallguy/devsdigest/">here.</a></p>
   </div>
