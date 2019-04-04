@@ -19,3 +19,9 @@ body > div {
   width: 75%;
   position: inherit;
 }
+
+address {
+  position: absolute;
+  left:50%;
+  transform: translate(-50%);
+}
