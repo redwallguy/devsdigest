@@ -4,7 +4,3 @@ venv
 .env
 gunicorn_local.py
 staticfiles
-*.jpg
-*.png
-*.jpeg
-*.gif
