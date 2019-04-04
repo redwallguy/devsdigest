@@ -2,7 +2,7 @@ import /*static*/ '../lib/jquery.js' /*endstatic*/;
 
 import * as base from /*static*/'./base.js'/*endstatic*/;
 
-$("a:has(> img)").each(function(index, element){
+$("body > a:has(> img)").each(function(index, element){
   let list_num = $(this).attr("data-list-num");
   let offset = 150;
   let top_px = offset + 165*parseInt(list_num);
