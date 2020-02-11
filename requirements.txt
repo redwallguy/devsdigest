@@ -1,7 +1,7 @@
 boto3==1.9.114
 botocore==1.12.114
 dj-database-url==0.5.0
-Django==2.0.7
+Django==2.2.10
 django-constrainedfilefield==3.2.0
 django-require==1.0.11
 django-storages==1.7.1
